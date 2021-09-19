@@ -4,33 +4,63 @@ let nmbr = document.getElementsByClassName('btn');
 const del = document.getElementById('btndel');
 const esc = document.getElementById('btnesc');
 const add = document.getElementById('btnplus');
+let acceptingNumber = true;
+let resultString = result.toString();
 
-result.textContent = '0';
+function col() { // When the user clicks the element,
+  if (acceptingNumber === false) return;
+  var currentNumber = this.textContent; // take the element's number,
+  num1.push(currentNumber); // and add it to the 'num1' array.
+  result.textContent = String(num1.join('')); // Then take the result's text content and add to it the element's number.
+  if (num1.join('') == '00') { // If the users presses double zeros,
+    num1 = []; // delete all the array items,
+    result.textContent = '0'; // and show '0'.
+  };
+}
 
-for (i of nmbr) {
-    i.addEventListener('click', function() { // When the user clicks the element,
-      var currentNumber = this.textContent; // take the element's number,
-      num1.push(currentNumber); // and add it to the 'num1' array.
-      result.textContent = String(num1.join('')); // Then take the result's text content and add to it the element's number.
-      if (num1.join('') == '00') { // If the users presses double zeros,
-        num1 = []; // delete all the array items,
-        result.textContent = '0'; // and show '0'.
-      };
-    });
+function test() {
+  for (i of nmbr) {
+      i.addEventListener('click', function() { // When the user clicks the element,
+        if (acceptingNumber === false) return;
+        var currentNumber = this.textContent; // take the element's number,
+        num1.push(currentNumber); // and add it to the 'num1' array.
+        result.textContent = String(num1.join('')); // Then take the result's text content and add to it the element's number.
+        if (num1.join('') == '00') { // If the users presses double zeros,
+          num1 = []; // delete all the array items,
+          result.textContent = '0'; // and show '0'.
+        };
+      });
+  }
+}
+
+test();
+
+function acceptingDigits() {
+  if (resultString.charAt(resultString.length-1) !== ' ') {
+    acceptingNumber = true;
+  }
 }
 
 del.addEventListener('click', function() {
+  if (resultString.charAt(resultString.length-1) !== ' ') {
+    resultString.slice(0, -3);
+  } else {
     num1.splice(-1, 1);
+  }
     result.textContent = String(num1.join(''));
     if (num1.join('') == '') result.textContent = '0';
+    acceptingDigits();
 })
 
 esc.addEventListener('click', function() {
     result.textContent = '0';
     num1 = [];
+    acceptingDigits();
 })
 
-add.addEventListener('click', function() {
+function testing() {
   result.textContent += ' ' + '+' + ' ';
-  // somehow make the 'num1' array stop receiving any further numbers.
-})
+  acceptingNumber = false;
+}
+
+add.addEventListener('click', testing)
