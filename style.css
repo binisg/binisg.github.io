@@ -1,0 +1,17 @@
+.buttons {
+    display: flex;
+}
+
+
+button.btn, button[id^="btn"] {
+    height: 25px;
+    width: 25px;
+}
+
+#btndel, #btnesc {
+    width: 50px;
+}
+
+#btnresult {
+    width: 100%;
+}
