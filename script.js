@@ -1,8 +1,9 @@
 let calculation = [];
 let result = document.getElementById('btnresult');
 let nmbr = document.getElementsByClassName('btn');
-let del = document.getElementById('btndel');
-let esc = document.getElementById('btnesc');
+const del = document.getElementById('btndel');
+const esc = document.getElementById('btnesc');
+const add = document.getElementById('btnplus');
 
 result.textContent = '0';
 
@@ -19,7 +20,7 @@ for (i of nmbr) {
 }
 
 del.addEventListener('click', function() {
-    calculation.splice(-1);
+    calculation.splice(-1, 1);
     result.textContent = String(calculation.join(''));
     if (calculation.join('') == '') result.textContent = '0';
 })
@@ -27,4 +28,9 @@ del.addEventListener('click', function() {
 esc.addEventListener('click', function() {
     result.textContent = '0';
     calculation = [];
+})
+
+add.addEventListener('click', function() {
+  result.textContent += ' ' + '+' + ' ';
+  
 })
