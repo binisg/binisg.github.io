@@ -5,7 +5,6 @@ const del = document.getElementById('btndel');
 const esc = document.getElementById('btnesc');
 const add = document.getElementById('btnplus');
 let acceptingNumber = true;
-let resultString = result.toString();
 
 function col() { // When the user clicks the element,
   if (acceptingNumber === false) return;
@@ -18,7 +17,7 @@ function col() { // When the user clicks the element,
   };
 }
 
-function test() {
+function firstNumber() {
   for (i of nmbr) {
       i.addEventListener('click', function() { // When the user clicks the element,
         if (acceptingNumber === false) return;
@@ -33,23 +32,20 @@ function test() {
   }
 }
 
-test();
+firstNumber();
 
 function acceptingDigits() {
-  if (resultString.charAt(resultString.length-1) !== ' ') {
+  if (result.textContent.charAt(result.textContent.length-1) !== ' ') {
     acceptingNumber = true;
   }
 }
 
 del.addEventListener('click', function() {
-  if (resultString.charAt(resultString.length-1) !== ' ') {
-    resultString.slice(0, -3);
-  } else {
-    num1.splice(-1, 1);
-  }
-    result.textContent = String(num1.join(''));
-    if (num1.join('') == '') result.textContent = '0';
-    acceptingDigits();
+  if (result.textContent.charAt(result.textContent.length-1) !== ' ') num1.splice(-1, 1);
+  else result.textContent.slice(0, -3);
+  result.textContent = String(num1.join(''));
+  if (num1.join('') == '') result.textContent = '0';
+  acceptingDigits();
 })
 
 esc.addEventListener('click', function() {
@@ -63,4 +59,7 @@ function testing() {
   acceptingNumber = false;
 }
 
-add.addEventListener('click', testing)
+add.addEventListener('click', function() {
+  result.textContent += ' ' + '+' + ' ';
+  acceptingNumber = false;
+})
