@@ -29,8 +29,8 @@ function secondNumber() {
       i.addEventListener('click', function() { // When the user clicks the element,
         if (acceptNumber === false) return;
         var currentNumber = this.textContent; // take the element's number,
-        num2.push(currentNumber); // and add it to the 'num1' array.
-        result.textContent += String(currentNumber) // Then take the result's text content and add to it the element's number.
+        num2.push(currentNumber); // and add it to the 'num2' array.
+        result.textContent += String(currentNumber); // Then take the result's text content and add to it the element's number.
         if (num2.join('') == '00') { // If the users presses double zeros,
           num2 = []; // delete all the array items,
           result.textContent += '0'; // and show '0'.
@@ -55,14 +55,17 @@ del.addEventListener('click', function() {
 })
 
 esc.addEventListener('click', function() {
-    result.textContent = '0';
     num1 = [];
+    num2 = [];
+    result.textContent = '0';
+    acceptNumber = false;
     acceptingDigits();
 })
 
 add.addEventListener('click', function() {
   result.textContent += ' ' + '+' + ' ';
   acceptingNumber = false;
+  acceptNumber = true;
   if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
   }
