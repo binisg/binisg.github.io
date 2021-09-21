@@ -5,8 +5,7 @@ const del = document.getElementById('btndel');
 const esc = document.getElementById('btnesc');
 const add = document.getElementById('btnplus');
 const eql = document.getElementById('btnequal');
-var olol = [];
-
+let olol = [];
 
 function clickNumber() {
   for (i of nmbr) {
@@ -18,15 +17,10 @@ function clickNumber() {
           result.textContent = numbers.join('');
         } else {
             result.textContent += currentNumber;
-            olol.push([currentNumber]);
+            olol.push(new Array(result.textContent.substring(result.textContent.lastIndexOf('+')+2)));
         }
-        
-        var count = 0;
-        for (let i=0; i<result.textContent.length; i++) {
-          if(result.textContent[i] == '+') count++;
-        }
-        var splicing = 1 + count;
-        olol.splice(splicing);
+
+        olol.splice(0, numbers.length-1);
 
         if (numbers.join('') == '00') {
           numbers = [];
@@ -68,5 +62,3 @@ eql.addEventListener('click', function() {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
   }
 })
-
-console.log(olol)
