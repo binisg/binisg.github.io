@@ -1,75 +1,64 @@
-let num1 = [];
-let num2 = [];
+let numbers = [];
 let result = document.getElementById('btnresult');
 let nmbr = document.getElementsByClassName('btn');
 const del = document.getElementById('btndel');
 const esc = document.getElementById('btnesc');
 const add = document.getElementById('btnplus');
-const eql = document.getElementById('btnequal')
-let acceptingNumber = true;
-let acceptNumber = true;
+const eql = document.getElementById('btnequal');
+var olol = [];
 
-function firstNumber() {
+
+function clickNumber() {
   for (i of nmbr) {
-      i.addEventListener('click', function() { // When the user clicks the element,
-        if (acceptingNumber === false) return;
-        var currentNumber = this.textContent; // take the element's number,
-        num1.push(currentNumber); // and add it to the 'num1' array.
-        result.textContent = String(num1.join('')); // Then take the result's text content and add to it the element's number.
-        if (num1.join('') == '00') { // If the users presses double zeros,
-          num1 = []; // delete all the array items,
-          result.textContent = '0'; // and show '0'.
+      i.addEventListener('click', function() {
+        var currentNumber = this.textContent;
+        if (result.textContent.includes('+') === false) {
+          numbers.push(currentNumber);
+          olol.push(numbers);
+          result.textContent = numbers.join('');
+        } else {
+            result.textContent += currentNumber;
+            olol.push([currentNumber]);
+        }
+        
+        var count = 0;
+        for (let i=0; i<result.textContent.length; i++) {
+          if(result.textContent[i] == '+') count++;
+        }
+        var splicing = 1 + count;
+        olol.splice(splicing);
+
+        if (numbers.join('') == '00') {
+          numbers = [];
+          result.textContent = '0';
         };
       });
   }
 }
 
-function secondNumber() {
-  for (i of nmbr) {
-      i.addEventListener('click', function() { // When the user clicks the element,
-        if (acceptNumber === false) return;
-        var currentNumber = this.textContent; // take the element's number,
-        num2.push(currentNumber); // and add it to the 'num2' array.
-        result.textContent += String(currentNumber); // Then take the result's text content and add to it the element's number.
-        if (num2.join('') == '00') { // If the users presses double zeros,
-          num2 = []; // delete all the array items,
-          result.textContent += '0'; // and show '0'.
-        };
-      });
-  }
-}
-
-firstNumber();
-
-function acceptingDigits() {
-  if (result.textContent.charAt(result.textContent.length-1) !== ' ' && acceptNumber === false) {
-    acceptingNumber = true;
-  }
-}
+clickNumber();
 
 del.addEventListener('click', function() {
   if (result.textContent.charAt(result.textContent.length-1) !== ' ') result.textContent = result.textContent.substring(0, result.textContent.length - 1);
   else result.textContent = result.textContent.substring(0, result.textContent.length - 3);
   if (result.textContent == '') result.textContent = '0';
-  acceptingDigits();
 })
 
 esc.addEventListener('click', function() {
-    num1 = [];
-    num2 = [];
+    numbers = [];
     result.textContent = '0';
-    acceptNumber = false;
-    acceptingDigits();
 })
+
+function chinese() {
+  return;
+}
 
 add.addEventListener('click', function() {
   result.textContent += ' ' + '+' + ' ';
-  acceptingNumber = false;
-  acceptNumber = true;
   if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
   }
-  secondNumber();
+  // chinese();
 })
 
 eql.addEventListener('click', function() {
@@ -79,3 +68,5 @@ eql.addEventListener('click', function() {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
   }
 })
+
+console.log(olol)
