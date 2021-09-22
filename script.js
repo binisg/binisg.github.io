@@ -11,7 +11,7 @@ function clickNumber() {
   for (i of nmbr) {
       i.addEventListener('click', function() {
         var currentNumber = this.textContent;
-        if (result.textContent.includes('+') === false) {
+        if (result.textContent.includes('+') === false && result.textContent.includes('-') === false && result.textContent.includes('x') === false && result.textContent.includes(':') === false) {
           numbers.push(currentNumber);
           olol.push([numbers.join('')]);
           result.textContent = numbers.join('');
@@ -39,6 +39,7 @@ del.addEventListener('click', function() {
 esc.addEventListener('click', function() {
     numbers = [];
     result.textContent = '0';
+    olol = [];
 })
 
 add.addEventListener('click', function(event) {
@@ -48,6 +49,9 @@ add.addEventListener('click', function(event) {
     event.preventDefault();
     return;
   }
+
+  // The following statements probably need to get into a function, so that they will work
+  // in conditions other than 'adding' too.
 
   var lastInfexOfPlus = result.textContent.lastIndexOf('+');
   var subnumbers = result.textContent.substring(result.textContent.lastIndexOf('+', lastInfexOfPlus-1)+2, lastInfexOfPlus-1)
@@ -65,8 +69,4 @@ add.addEventListener('click', function(event) {
 
 eql.addEventListener('click', function() {
   result.textContent += ' ' + '=' + ' ';
-  acceptNumber = false;
-  if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
-    result.textContent = result.textContent.substring(0, result.textContent.length - 3);
-  }
 })
