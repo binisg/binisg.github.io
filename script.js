@@ -4,8 +4,12 @@ let nmbr = document.getElementsByClassName('btn');
 const del = document.getElementById('btndel');
 const esc = document.getElementById('btnesc');
 const add = document.getElementById('btnplus');
+const minus = document.getElementById('btnminus');
+const times = document.getElementById('btntimes');
+const divide = document.getElementById('btndivide');
 const eql = document.getElementById('btnequal');
-let olol = [];
+let finalNmbrs = [];
+let digits = 0;
 
 function clickNumber() {
   for (i of nmbr) {
@@ -13,11 +17,10 @@ function clickNumber() {
         var currentNumber = this.textContent;
         if (result.textContent.includes('+') === false && result.textContent.includes('-') === false && result.textContent.includes('x') === false && result.textContent.includes(':') === false) {
           numbers.push(currentNumber);
-          olol.push([numbers.join('')]);
+          finalNmbrs.push([numbers.join('')]);
           result.textContent = numbers.join('');
         } else {
             result.textContent += currentNumber;
-            // olol.push(new Array(result.textContent.substring(result.textContent.lastIndexOf('+')+2)));
         }
 
         if (numbers.join('') == '00') {
@@ -39,34 +42,57 @@ del.addEventListener('click', function() {
 esc.addEventListener('click', function() {
     numbers = [];
     result.textContent = '0';
-    olol = [];
+    finalNmbrs = [];
 })
 
+function digiting() {
+  for (i=0; i<result.textContent.length; i++) {
+    if (result.textContent[i] === '+') digits++;
+    if (result.textContent[i] === '-') digits++;
+    if (result.textContent[i] === 'x') digits++;
+    if (result.textContent[i] === ':') digits++;
+  };
+
+  let small = Math.max(result.textContent.lastIndexOf('+'), result.textContent.lastIndexOf('-'), result.textContent.lastIndexOf('x'), result.textContent.lastIndexOf(':'))
+
+  if(digits <= 1) {
+    finalNmbrs.splice(0, numbers.length-1);
+  } else if (digits > 1) {
+    finalNmbrs.push(new Array(result.textContent.substring(small, small-1)+2, small-1));
+  }
+  digits = 0;
+}
+
+function addOperator(op) {
+  result.textContent += ' ' + String(op) + ' ';
+}
+
 add.addEventListener('click', function(event) {
-  result.textContent += ' ' + '+' + ' ';
+  addOperator('+');
   if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
     event.preventDefault();
     return;
   }
 
-  // The following statements probably need to get into a function, so that they will work
-  // in conditions other than 'adding' too.
+  digiting('');
+})
 
-  var lastInfexOfPlus = result.textContent.lastIndexOf('+');
-  var subnumbers = result.textContent.substring(result.textContent.lastIndexOf('+', lastInfexOfPlus-1)+2, lastInfexOfPlus-1)
+minus.addEventListener('click', function() {
+  addOperator('-');
+  digiting('');
+})
 
-  var pluses = 0;
-  for (i=0; i<result.textContent.length; i++) {
-    if (result.textContent[i] == '+') pluses++;
-  }
-  if(pluses <= 1) {
-    olol.splice(0, numbers.length-1);
-  } else if (pluses > 1) {
-    olol.push(new Array(subnumbers));
-  }
+times.addEventListener('click', function() {
+  addOperator('x');
+  digiting('')
+})
+
+divide.addEventListener('click', function() {
+  addOperator(':');
+  digiting('');
 })
 
 eql.addEventListener('click', function() {
-  result.textContent += ' ' + '=' + ' ';
+  addOperator('=');
 })
