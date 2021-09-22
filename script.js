@@ -17,10 +17,8 @@ function clickNumber() {
           result.textContent = numbers.join('');
         } else {
             result.textContent += currentNumber;
-            olol.push(new Array(result.textContent.substring(result.textContent.lastIndexOf('+')+2)));
+            // olol.push(new Array(result.textContent.substring(result.textContent.lastIndexOf('+')+2)));
         }
-
-        olol.splice(0, numbers.length-1);
 
         if (numbers.join('') == '00') {
           numbers = [];
@@ -43,16 +41,26 @@ esc.addEventListener('click', function() {
     result.textContent = '0';
 })
 
-function chinese() {
-  return;
-}
-
-add.addEventListener('click', function() {
+add.addEventListener('click', function(event) {
   result.textContent += ' ' + '+' + ' ';
   if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
+    event.preventDefault();
+    return;
   }
-  // chinese();
+
+  var lastInfexOfPlus = result.textContent.lastIndexOf('+');
+  var subnumbers = result.textContent.substring(result.textContent.lastIndexOf('+', lastInfexOfPlus-1)+2, lastInfexOfPlus-1)
+
+  var pluses = 0;
+  for (i=0; i<result.textContent.length; i++) {
+    if (result.textContent[i] == '+') pluses++;
+  }
+  if(pluses <= 1) {
+    olol.splice(0, numbers.length-1);
+  } else if (pluses > 1) {
+    olol.push(new Array(subnumbers));
+  }
 })
 
 eql.addEventListener('click', function() {
