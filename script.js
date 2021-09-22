@@ -13,7 +13,7 @@ function clickNumber() {
         var currentNumber = this.textContent;
         if (result.textContent.includes('+') === false) {
           numbers.push(currentNumber);
-          olol.push(numbers);
+          olol.push([numbers.join('')]);
           result.textContent = numbers.join('');
         } else {
             result.textContent += currentNumber;
