@@ -53,12 +53,22 @@ function digiting() {
     if (result.textContent[i] === ':') digits++;
   };
 
-  let small = Math.max(result.textContent.lastIndexOf('+'), result.textContent.lastIndexOf('-'), result.textContent.lastIndexOf('x'), result.textContent.lastIndexOf(':'))
+  // The twoOpnsInOne function need fixing. It should return a number, so thaat the small and smallNumber lead to a proper finalNmbrs.push() statement
 
+  function twoOpsInOne(x) {
+    if (result.textContent.lastIndexOf(x, result.textContent.lastIndexOf(x)-1) == -1) {
+      return 0;
+    } else return result.textContent.lastIndexOf(x)-1;
+  }
+
+  let small = Math.max(result.textContent.lastIndexOf('+', twoOpsInOne('+')), result.textContent.lastIndexOf('-', twoOpsInOne('-')), result.textContent.lastIndexOf('x', twoOpsInOne('x')), result.textContent.lastIndexOf(':', twoOpsInOne(':')), result.textContent.lastIndexOf('='));
+  var smallNumber = Math.max(result.textContent.lastIndexOf('+'), result.textContent.lastIndexOf('-'), result.textContent.lastIndexOf('x'), result.textContent.lastIndexOf(':'), result.textContent.lastIndexOf('='));
+  console.log(small);
   if(digits <= 1) {
     finalNmbrs.splice(0, numbers.length-1);
   } else if (digits > 1) {
-    finalNmbrs.push(new Array(result.textContent.substring(small, small-1)+2, small-1));
+    finalNmbrs.push(new Array(result.textContent.substring(small+2, result.textContent.lastIndexOf(smallNumber)-1)));
+    // finalNmbrs.push(new Array(result.textContent.substring(tContent.lastIndexOf('+')-1)+2, result.textContent.lastIndexOf('+')-1)));
   }
   digits = 0;
 }
@@ -75,24 +85,25 @@ add.addEventListener('click', function(event) {
     return;
   }
 
-  digiting('');
+  digiting();
 })
 
 minus.addEventListener('click', function() {
   addOperator('-');
-  digiting('');
+  digiting();
 })
 
 times.addEventListener('click', function() {
   addOperator('x');
-  digiting('')
+  digiting()
 })
 
 divide.addEventListener('click', function() {
   addOperator(':');
-  digiting('');
+  digiting();
 })
 
 eql.addEventListener('click', function() {
   addOperator('=');
+  digiting;
 })
