@@ -10,6 +10,8 @@ const divide = document.getElementById('btndivide');
 const eql = document.getElementById('btnequal');
 let finalNmbrs = [];
 let digits = 0;
+let timesOp = 0;
+let timesDelOp = 0;
 
 function clickNumber() {
   for (i of nmbr) {
@@ -34,8 +36,22 @@ function clickNumber() {
 clickNumber();
 
 del.addEventListener('click', function() {
-  if (result.textContent.charAt(result.textContent.length-1) !== ' ') result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-  else result.textContent = result.textContent.substring(0, result.textContent.length - 3);
+  if (result.textContent.charAt(result.textContent.length-1) !== ' ') {
+    if (timesOp == 0) {
+      result.textContent = result.textContent.substring(0, result.textContent.length - 1);
+      numbers.pop();
+    } else if (timesOp == 1) {
+      result.textContent = result.textContent.substring(0, result.textContent.length - 1);
+    } else if (timesOp > 1) {
+      return;
+    }
+    var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs.length-1);
+    finalNmbrs[finalNmbrs.length-1] = [lastNumber];
+  }
+  else {
+    result.textContent = result.textContent.substring(0, result.textContent.length - 3);
+    timesDelOp--;
+  }
   if (result.textContent == '') result.textContent = '0';
 })
 
@@ -61,6 +77,8 @@ function digiting() {
     finalNmbrs.push(new Array(result.textContent.substring(small+2, smallNumber-1)));
   }
   digits = 0;
+  timesOp++;
+  timesDelOp++;
 }
 
 function addOperator(op) {
