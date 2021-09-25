@@ -42,15 +42,11 @@ del.addEventListener('click', function() {
       finalNmbrs.splice(0, finalNmbrs.length);
     } else if (timesOp >= 1 && timesOp == timesDelOp) {
       result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-    } 
-    // The following "else if" statement needs to be fixed. I think the line '51' is the one with the problem.
-
-    else if (timesOp >= 1 && timesOp !== timesDelOp) {
+    } else if (timesOp >= 1 && timesOp !== timesDelOp) {
       result.textContent = result.textContent.substring(0, result.textContent.length - 1);
       if (String(finalNmbrs[finalNmbrs.length-1]) == '') {
         finalNmbrs.pop();
       }
-      // The following 4 lines are correct
       var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs[finalNmbrs.length-1].toString().length-1);
       finalNmbrs.pop();
       finalNmbrs.push([lastNumber]);
@@ -124,5 +120,5 @@ divide.addEventListener('click', function() {
 
 eql.addEventListener('click', function() {
   addOperator('=');
-  digiting;
+  digiting();
 })
