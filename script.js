@@ -42,11 +42,18 @@ del.addEventListener('click', function() {
       finalNmbrs.splice(0, finalNmbrs.length);
     } else if (timesOp >= 1 && timesOp == timesDelOp) {
       result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-    } else if (timesOp >= 1 && timesOp !== timesDelOp) {
+    } 
+    // The following "else if" statement needs to be fixed. I think the line '51' is the one with the problem.
+
+    else if (timesOp >= 1 && timesOp !== timesDelOp) {
       result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-      if (finalNmbrs[finalNmbrs.length-1] = []) finalNmbrs.pop();
-      var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs.length-1);
-      finalNmbrs[finalNmbrs.length-1] = [lastNumber];
+      if (String(finalNmbrs[finalNmbrs.length-1]) == '') {
+        finalNmbrs.pop();
+      }
+      // The following 4 lines are correct
+      var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs[finalNmbrs.length-1].toString().length-1);
+      finalNmbrs.pop();
+      finalNmbrs.push([lastNumber]);
       console.log(finalNmbrs)
     }
   }
@@ -58,9 +65,11 @@ del.addEventListener('click', function() {
 })
 
 esc.addEventListener('click', function() {
-    numbers = [];
     result.textContent = '0';
     finalNmbrs = [];
+    numbers = [];
+    timesOp = [];
+    timesDelOp = [];
 })
 
 function digiting() {
@@ -70,8 +79,6 @@ function digiting() {
     if (result.textContent[i] === 'x') digits++;
     if (result.textContent[i] === ':') digits++;
   };
-
-  
 
   var smallNumber = Math.max(result.textContent.lastIndexOf('+'), result.textContent.lastIndexOf('-'), result.textContent.lastIndexOf('x'), result.textContent.lastIndexOf(':'), result.textContent.lastIndexOf('='));
   let small = Math.max(result.textContent.lastIndexOf('+', smallNumber-1), result.textContent.lastIndexOf('-', smallNumber-1), result.textContent.lastIndexOf('x', smallNumber-1), result.textContent.lastIndexOf(':', smallNumber-1));
