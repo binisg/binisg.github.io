@@ -19,7 +19,6 @@ function clickNumber() {
         var currentNumber = this.textContent;
         if (result.textContent.includes('+') === false && result.textContent.includes('-') === false && result.textContent.includes('x') === false && result.textContent.includes(':') === false) {
           numbers.push(currentNumber);
-          finalNmbrs.push([numbers.join('')]);
           result.textContent = numbers.join('');
         } else {
             result.textContent += currentNumber;
@@ -40,17 +39,20 @@ del.addEventListener('click', function() {
     if (timesOp == 0) {
       result.textContent = result.textContent.substring(0, result.textContent.length - 1);
       numbers.pop();
-    } else if (timesOp == 1) {
+      finalNmbrs.splice(0, finalNmbrs.length);
+    } else if (timesOp >= 1 && timesOp == timesDelOp) {
       result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-    } else if (timesOp > 1) {
-      return;
+    } else if (timesOp >= 1 && timesOp !== timesDelOp) {
+      result.textContent = result.textContent.substring(0, result.textContent.length - 1);
+      if (finalNmbrs[finalNmbrs.length-1] = []) finalNmbrs.pop();
+      var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs.length-1);
+      finalNmbrs[finalNmbrs.length-1] = [lastNumber];
+      console.log(finalNmbrs)
     }
-    var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs.length-1);
-    finalNmbrs[finalNmbrs.length-1] = [lastNumber];
   }
   else {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
-    timesDelOp--;
+    timesOp--;
   }
   if (result.textContent == '') result.textContent = '0';
 })
@@ -69,10 +71,12 @@ function digiting() {
     if (result.textContent[i] === ':') digits++;
   };
 
+  
+
   var smallNumber = Math.max(result.textContent.lastIndexOf('+'), result.textContent.lastIndexOf('-'), result.textContent.lastIndexOf('x'), result.textContent.lastIndexOf(':'), result.textContent.lastIndexOf('='));
   let small = Math.max(result.textContent.lastIndexOf('+', smallNumber-1), result.textContent.lastIndexOf('-', smallNumber-1), result.textContent.lastIndexOf('x', smallNumber-1), result.textContent.lastIndexOf(':', smallNumber-1));
   if(digits <= 1) {
-    finalNmbrs.splice(0, numbers.length-1);
+    finalNmbrs.push([numbers.join('')]);
   } else if (digits > 1) {
     finalNmbrs.push(new Array(result.textContent.substring(small+2, smallNumber-1)));
   }
