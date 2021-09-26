@@ -12,6 +12,7 @@ let finalNmbrs = [];
 let digits = 0;
 let timesOp = 0;
 let timesDelOp = 0;
+let op1 = 0; op2 = 0; op3 = 0; op4 = 0;
 
 function clickNumber() {
   for (i of nmbr) {
@@ -55,6 +56,7 @@ del.addEventListener('click', function() {
   }
   else {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
+    finalNmbrs.pop();
     timesOp--;
   }
   if (result.textContent == '') result.textContent = '0';
@@ -69,18 +71,20 @@ esc.addEventListener('click', function() {
 })
 
 function digiting() {
+  console.log(result.textContent);
   for (i=0; i<result.textContent.length; i++) {
     if (result.textContent[i] === '+') digits++;
     if (result.textContent[i] === '-') digits++;
     if (result.textContent[i] === 'x') digits++;
     if (result.textContent[i] === ':') digits++;
+    if (result.textContent[i] === '=') digits++;
   };
 
   var smallNumber = Math.max(result.textContent.lastIndexOf('+'), result.textContent.lastIndexOf('-'), result.textContent.lastIndexOf('x'), result.textContent.lastIndexOf(':'), result.textContent.lastIndexOf('='));
   let small = Math.max(result.textContent.lastIndexOf('+', smallNumber-1), result.textContent.lastIndexOf('-', smallNumber-1), result.textContent.lastIndexOf('x', smallNumber-1), result.textContent.lastIndexOf(':', smallNumber-1));
   if(digits <= 1) {
     finalNmbrs.push([numbers.join('')]);
-  } else if (digits > 1) {
+  } else if (digits >= 2) {
     finalNmbrs.push(new Array(result.textContent.substring(small+2, smallNumber-1)));
   }
   digits = 0;
@@ -101,24 +105,50 @@ add.addEventListener('click', function(event) {
   }
 
   digiting();
+  finalNmbrs.push('+');
 })
 
 minus.addEventListener('click', function() {
   addOperator('-');
   digiting();
+  finalNmbrs.push('-');
 })
 
 times.addEventListener('click', function() {
   addOperator('x');
-  digiting()
+  digiting();
+  finalNmbrs.push('x');
 })
 
 divide.addEventListener('click', function() {
   addOperator(':');
   digiting();
+  finalNmbrs.push(':');
 })
+
+function calculate(op) {
+  switch (op) {
+    case 'Times':
+      var x = finalNmbrs.lastIndexOf('x');
+      var prev = finalNmbrs[x-1];
+      var aft = finalNmbrs[x+1];
+      var calc = Number(prev) * Number(aft);
+      finalNmbrs.splice(prev, 3, calc);
+      op3--;
+  }
+}
 
 eql.addEventListener('click', function() {
   addOperator('=');
   digiting();
+  finalNmbrs = finalNmbrs.flat();
+  for (i=0; i<finalNmbrs.length; i++) {
+    if (finalNmbrs[i] === '+') op1++;
+    if (finalNmbrs[i] === '-') op2++;
+    if (finalNmbrs[i] === 'x') op3++;
+    if (finalNmbrs[i] === ':') op4++;
+  };
+  for (; op3 !== 0; ) calculate('Times');
+  finalNmbrs.splice(0, finalNmbrs.length-1);
+  result.textContent = finalNmbrs.reduce((x, y) => x + y)
 })
