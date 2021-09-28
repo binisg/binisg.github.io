@@ -51,7 +51,6 @@ del.addEventListener('click', function() {
       var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs[finalNmbrs.length-1].toString().length-1);
       finalNmbrs.pop();
       finalNmbrs.push([lastNumber]);
-      console.log(finalNmbrs)
     }
   }
   else {
@@ -68,10 +67,10 @@ esc.addEventListener('click', function() {
     numbers = [];
     timesOp = [];
     timesDelOp = [];
+    op1 = []; op2 = []; op3 = []; op4 = [];
 })
 
 function digiting() {
-  console.log(result.textContent);
   for (i=0; i<result.textContent.length; i++) {
     if (result.textContent[i] === '+') digits++;
     if (result.textContent[i] === '-') digits++;
@@ -133,8 +132,40 @@ function calculate(op) {
       var prev = finalNmbrs[x-1];
       var aft = finalNmbrs[x+1];
       var calc = Number(prev) * Number(aft);
-      finalNmbrs.splice(prev, 3, calc);
+      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
       op3--;
+      break;
+
+      case 'Divide':
+      var y = finalNmbrs.lastIndexOf(':');
+      var prev = finalNmbrs[y-1];
+      var aft = finalNmbrs[y+1];
+      var calc = Number(prev) / Number(aft);
+      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      op4--;
+      break;
+      
+  case 'Plus':
+      var z = finalNmbrs.lastIndexOf('+');
+      var prev = finalNmbrs[z-1];
+      var aft = finalNmbrs[z+1];
+      var calc = Number(prev) + Number(aft);
+      console.log(finalNmbrs);
+      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      console.log(finalNmbrs);
+      op1--;
+      break;
+      
+  case 'Minus':
+      var e = finalNmbrs.lastIndexOf('-');
+      var prev = finalNmbrs[e-1];
+      var aft = finalNmbrs[e+1];
+      var calc = Number(prev) - Number(aft);
+      console.log(finalNmbrs);
+      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      console.log(finalNmbrs);
+      op2--;
+      break;
   }
 }
 
@@ -148,7 +179,29 @@ eql.addEventListener('click', function() {
     if (finalNmbrs[i] === 'x') op3++;
     if (finalNmbrs[i] === ':') op4++;
   };
-  for (; op3 !== 0; ) calculate('Times');
+
+  // The following loops need serious fixing (!).
+  //
+  if (op3 !== 0 && op4 == 0) {
+    while (op3 !== 0) {
+      calculate('Times');
+    }
+  }
+  if (op4 !== 0 && op3 == 0) {
+    while (op4 !== 0) {
+      calculate('Divide');
+    }
+  }
+  if (op1 !== 0 && op2 == 0) {
+    while (op1 !== 0) {
+      calculate('Plus');
+    }
+  }
+  if (op2 !== 0 && op1 == 0) {
+    while (op2 !== 0) {
+      calculate('Minus');
+    }
+  }
   finalNmbrs.splice(0, finalNmbrs.length-1);
   result.textContent = finalNmbrs.reduce((x, y) => x + y)
 })
