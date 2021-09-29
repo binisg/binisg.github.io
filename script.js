@@ -24,10 +24,12 @@ function clickNumber() {
         } else {
             result.textContent += currentNumber;
         }
-
         if (numbers.join('') == '00') {
           numbers = [];
           result.textContent = '0';
+        };
+        if (result.textContent[result.textContent.length-2] == '0' && result.textContent[result.textContent.length-2] == '0' && result.textContent[result.textContent.length-3] == ' ') {
+          result.textContent = result.textContent.substring(0, result.textContent.length - 1);
         };
       });
   }
@@ -67,10 +69,19 @@ esc.addEventListener('click', function() {
     numbers = [];
     timesOp = [];
     timesDelOp = [];
-    op1 = []; op2 = []; op3 = []; op4 = [];
+    op1 = 0; op2 = 0; op3 = 0; op4 = 0;
 })
 
-function digiting() {
+function digiting(event) {
+  if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
+    result.textContent = result.textContent.substring(0, result.textContent.length - 3);
+    event.preventDefault();
+    finalNmbrs.pop();
+    finalNmbrs.push(finalNmbrs[finalNmbrs.length-1]);
+    console.log(finalNmbrs);
+    result.textContent = result.textContent.replace(result.textContent.substring(result.textContent.length-1, 2), finalNmbrs[finalNmbrs.length-1])
+    return;
+  }
   for (i=0; i<result.textContent.length; i++) {
     if (result.textContent[i] === '+') digits++;
     if (result.textContent[i] === '-') digits++;
@@ -97,31 +108,25 @@ function addOperator(op) {
 
 add.addEventListener('click', function(event) {
   addOperator('+');
-  if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
-    result.textContent = result.textContent.substring(0, result.textContent.length - 3);
-    event.preventDefault();
-    return;
-  }
-
-  digiting();
+  digiting(event);
   finalNmbrs.push('+');
 })
 
-minus.addEventListener('click', function() {
+minus.addEventListener('click', function(event) {
   addOperator('-');
-  digiting();
+  digiting(event);
   finalNmbrs.push('-');
 })
 
-times.addEventListener('click', function() {
+times.addEventListener('click', function(event) {
   addOperator('x');
-  digiting();
+  digiting(event);
   finalNmbrs.push('x');
 })
 
-divide.addEventListener('click', function() {
+divide.addEventListener('click', function(event) {
   addOperator(':');
-  digiting();
+  digiting(event);
   finalNmbrs.push(':');
 })
 
@@ -146,6 +151,7 @@ function calculate(op) {
       break;
       
   case 'Plus':
+      console.log("PRESSED");
       var z = finalNmbrs.indexOf('+');
       var prev = finalNmbrs[z-1];
       var aft = finalNmbrs[z+1];
@@ -176,23 +182,6 @@ eql.addEventListener('click', function() {
     if (finalNmbrs[i] === ':') op4++;
   };
 
-  // The following loops need serious fixing (!).
-  // Everything but the first operation of the 'while'
-  // loop runs smoothly. But the first operation,
-  // for some reason, does a random calculation and
-  // messes up the array. Also, my poor mind just 
-  // discovered that, in one calculation, if the
-  // addition performs first and then the substraction,
-  // is different than if the substraction was to perform
-  // before the addition. In my brain, for some reason,
-  // this was not 100% clear at the time. Last but not
-  // least, when (God first) I finish with this tiring,
-  // exhausting 'calculate' function, I ought to fix other
-  // bugs, such as the ability of a user to press '0'
-  // multiple times. I don't want that. Finally, I also
-  // don't want a user to have the ability to press one
-  // operation symbol after another. Good night.
-
   if (op3 !== 0) {
     while (op3 !== 0) {
       calculate('Times');
@@ -214,5 +203,10 @@ eql.addEventListener('click', function() {
     }
   }
   finalNmbrs.splice(0, finalNmbrs.length-1);
-  result.textContent = finalNmbrs.reduce((x, y) => x + y)
+  result.textContent = finalNmbrs.reduce((x, y) => x + y);
+  finalNmbrs = [];
+  numbers = result.textContent.split('');
+  timesOp = [];
+  timesDelOp = [];
+  op1 = 0; op2 = 0; op3 = 0; op4 = 0;
 })
