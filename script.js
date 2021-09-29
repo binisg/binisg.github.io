@@ -132,7 +132,7 @@ function calculate(op) {
       var prev = finalNmbrs[x-1];
       var aft = finalNmbrs[x+1];
       var calc = Number(prev) * Number(aft);
-      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      finalNmbrs.splice(finalNmbrs.lastIndexOf(prev), 3, calc);
       op3--;
       break;
 
@@ -141,28 +141,28 @@ function calculate(op) {
       var prev = finalNmbrs[y-1];
       var aft = finalNmbrs[y+1];
       var calc = Number(prev) / Number(aft);
-      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      finalNmbrs.splice(finalNmbrs.lastIndexOf(prev), 3, calc);
       op4--;
       break;
       
-  case 'Plus':
+      case 'Plus':
       var z = finalNmbrs.lastIndexOf('+');
       var prev = finalNmbrs[z-1];
       var aft = finalNmbrs[z+1];
       var calc = Number(prev) + Number(aft);
       console.log(finalNmbrs);
-      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      finalNmbrs.splice(finalNmbrs.lastIndexOf(prev), 3, calc);
       console.log(finalNmbrs);
       op1--;
       break;
       
-  case 'Minus':
+      case 'Minus':
       var e = finalNmbrs.lastIndexOf('-');
       var prev = finalNmbrs[e-1];
       var aft = finalNmbrs[e+1];
       var calc = Number(prev) - Number(aft);
       console.log(finalNmbrs);
-      finalNmbrs.splice(finalNmbrs.indexOf(prev), 3, calc);
+      finalNmbrs.splice(finalNmbrs.lastIndexOf(prev), 3, calc);
       console.log(finalNmbrs);
       op2--;
       break;
@@ -180,8 +180,7 @@ eql.addEventListener('click', function() {
     if (finalNmbrs[i] === ':') op4++;
   };
 
-  // The following loops need serious fixing (!).
-  //
+
   if (op3 !== 0 && op4 == 0) {
     while (op3 !== 0) {
       calculate('Times');
