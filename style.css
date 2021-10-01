@@ -1,17 +1,55 @@
-.buttons {
+:root {
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+}
+
+.calc-container {
     display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100vh;
+    width: 100vw;
+}
+
+.buttons {
+    display: grid; 
+    grid-template-columns: 125px 125px 125px 125px 125px; 
+    grid-template-rows: 75px 75px 75px 75px 75px; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+    "result result result result result"
+    "no-1 no-2 no-3 ac back"
+    "no-4 no-5 no-6 plus minus"
+    "no-7 no-8 no-9 times divided"
+    ". no-0 dot equal equal"; 
+}
+
+.buttons > button {
+    height: 75px;
 }
 
 
-button.btn, button[id^="btn"] {
-    height: 50px;
-    width: 50px;
-}
-
-#btndel, #btnesc {
-    width: 50px;
-}
-
-#btnresult {
-    width: 100%;
-}
+button.result { grid-area: result; }
+button.no-1 { grid-area: no-1; }
+button.no-2 { grid-area: no-2; }
+button.no-3 { grid-area: no-3; }
+button.no-4 { grid-area: no-4; }
+button.no-5 { grid-area: no-5; }
+button.no-6 { grid-area: no-6; }
+button.no-7 { grid-area: no-7; }
+button.no-8 { grid-area: no-8; }
+button.no-9 { grid-area: no-9; }
+button.no-0 { grid-area: no-0; }
+button.dot { grid-area: dot; }
+button.plus { grid-area: plus; }
+button.minus { grid-area: minus; }
+button.times { grid-area: times; }
+button.divided { grid-area: divided; }
+button.back { grid-area: back; }
+button.ac { grid-area: ac; }
+button.equal { grid-area: equal; }
