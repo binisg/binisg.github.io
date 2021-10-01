@@ -76,8 +76,9 @@ function digiting(op) {
   if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
      result.textContent = result.textContent.substring(0, result.textContent.length - 3);
      finalNmbrs.pop();
-     result.textContent = result.textContent.replace(result.textContent.substring(result.textContent.length-1, 2), op)
-     return ;
+     result.textContent = result.textContent.substring(0, result.textContent.length-2)
+     result.textContent += op + ' ';
+     return;
    }
   for (i=0; i<result.textContent.length; i++) {
     if (result.textContent[i] === '+') digits++;
