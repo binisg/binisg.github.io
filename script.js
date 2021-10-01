@@ -77,7 +77,7 @@ function digiting(op) {
      result.textContent = result.textContent.substring(0, result.textContent.length - 3);
      finalNmbrs.pop();
      result.textContent = result.textContent.replace(result.textContent.substring(result.textContent.length-1, 2), op)
-     return;
+     return ;
    }
   for (i=0; i<result.textContent.length; i++) {
     if (result.textContent[i] === '+') digits++;
