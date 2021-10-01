@@ -31,6 +31,10 @@ function clickNumber() {
         if (result.textContent[result.textContent.length-2] == '0' && result.textContent[result.textContent.length-2] == '0' && result.textContent[result.textContent.length-3] == ' ') {
           result.textContent = result.textContent.substring(0, result.textContent.length - 1);
         };
+
+        while (result.textContent.length >= 26) {
+          result.textContent = result.textContent.substring(1);
+        };
       });
   }
 }
@@ -101,6 +105,7 @@ function digiting(op) {
 }
 
 function addOperator(op) {
+  // if(result.textContent.length >= 26) continue;
   result.textContent += ' ' + String(op) + ' ';
 }
 
@@ -149,7 +154,6 @@ function calculate(op) {
       break;
       
   case 'Plus':
-      console.log("PRESSED");
       var z = finalNmbrs.indexOf('+');
       var prev = finalNmbrs[z-1];
       var aft = finalNmbrs[z+1];
