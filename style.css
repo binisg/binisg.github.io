@@ -18,21 +18,25 @@
 
 .buttons {
     display: grid; 
-    grid-template-columns: 125px 125px 125px 125px 125px; 
-    grid-template-rows: 75px 75px 75px 75px 75px; 
-    gap: 0px 0px; 
+    grid-template-columns: 60px 60px 60px 60px 60px; 
+    grid-template-rows: 50px 60px 60px 60px 60px; 
+    gap: 10px 10px; 
     grid-template-areas: 
     "result result result result result"
     "no-1 no-2 no-3 ac back"
     "no-4 no-5 no-6 plus minus"
     "no-7 no-8 no-9 times divided"
-    ". no-0 dot equal equal"; 
+    ". no-0 dot equal equal";
+    background-color: rgb(201, 36, 36);
+    padding: 50px 50px 50px 50px;
+    border-radius: 90px;
+    margin-bottom: 10px;
 }
 
 .buttons > button {
-    height: 75px;
+    border-radius: 180px;
+    border: 1px solid #000;
 }
-
 
 button.result { grid-area: result; }
 button.no-1 { grid-area: no-1; }
@@ -53,3 +57,14 @@ button.divided { grid-area: divided; }
 button.back { grid-area: back; }
 button.ac { grid-area: ac; }
 button.equal { grid-area: equal; }
+
+p, button.result {
+    font-size: 22px;
+}
+
+button.result {
+    text-align: right;
+    padding: 0 10px;
+    white-space: pre-wrap;
+    margin-bottom: 15px;
+}
