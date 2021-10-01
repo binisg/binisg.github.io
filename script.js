@@ -105,7 +105,9 @@ function digiting(op) {
 }
 
 function addOperator(op) {
-  // if(result.textContent.length >= 26) continue;
+  while (result.textContent.length >= 26) {
+    result.textContent = result.textContent.substring(1);
+  };
   result.textContent += ' ' + String(op) + ' ';
 }
 
