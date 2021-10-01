@@ -72,16 +72,13 @@ esc.addEventListener('click', function() {
     op1 = 0; op2 = 0; op3 = 0; op4 = 0;
 })
 
-function digiting(event, op) {
-  // if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
-  //   result.textContent = result.textContent.substring(0, result.textContent.length - 3);
-  //   event.preventDefault();
-  //   finalNmbrs.pop();
-  //   finalNmbrs.push(finalNmbrs[finalNmbrs.length-1]);
-  //   console.log(finalNmbrs);
-  //   result.textContent = result.textContent.replace(result.textContent.substring(result.textContent.length-1, 2), finalNmbrs[finalNmbrs.length-1])
-  //   return;
-  // }
+function digiting(op) {
+  if (result.textContent.charAt(result.textContent.length-3) == ' ' && result.textContent.charAt(result.textContent.length-4) == ' ') {
+     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
+     finalNmbrs.pop();
+     result.textContent = result.textContent.replace(result.textContent.substring(result.textContent.length-1, 2), op)
+     return;
+   }
   for (i=0; i<result.textContent.length; i++) {
     if (result.textContent[i] === '+') digits++;
     if (result.textContent[i] === '-') digits++;
@@ -106,27 +103,27 @@ function addOperator(op) {
   result.textContent += ' ' + String(op) + ' ';
 }
 
-add.addEventListener('click', function(event) {
+add.addEventListener('click', function() {
   addOperator('+');
-  digiting(event, '+');
+  digiting('+');
   finalNmbrs.push('+');
 })
 
-minus.addEventListener('click', function(event) {
+minus.addEventListener('click', function() {
   addOperator('-');
-  digiting(event, '-');
+  digiting('-');
   finalNmbrs.push('-');
 })
 
-times.addEventListener('click', function(event) {
+times.addEventListener('click', function() {
   addOperator('x');
-  digiting(event, 'x');
+  digiting('x');
   finalNmbrs.push('x');
 })
 
-divide.addEventListener('click', function(event) {
+divide.addEventListener('click', function() {
   addOperator(':');
-  digiting(event, ':');
+  digiting(':');
   finalNmbrs.push(':');
 })
 
