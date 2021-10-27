@@ -32,6 +32,8 @@ function clickNumber() {
           result.textContent = result.textContent.substring(0, result.textContent.length - 1);
         };
 
+        // If the numbers on the result bar are more than 26, then delete one and add the other.
+        // Does not infect calc arrays. Exists for overflow hiding purposes.
         while (result.textContent.length >= 26) {
           result.textContent = result.textContent.substring(1);
         };
@@ -42,26 +44,25 @@ function clickNumber() {
 clickNumber();
 
 del.addEventListener('click', function() {
-  if (result.textContent.charAt(result.textContent.length-1) !== ' ') {
-    if (timesOp == 0) {
-      result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-      numbers.pop();
-      finalNmbrs.splice(0, finalNmbrs.length);
-    } else if (timesOp >= 1 && timesOp == timesDelOp) {
-      result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-    } else if (timesOp >= 1 && timesOp !== timesDelOp) {
-      result.textContent = result.textContent.substring(0, result.textContent.length - 1);
-      if (String(finalNmbrs[finalNmbrs.length-1]) == '') {
-        finalNmbrs.pop();
-      }
+  if (result.textContent.charAt(result.textContent.length-1) !== ' ') { // if deleting a number,
+    if (timesOp == 0) { // if there is no operators,
+      result.textContent = result.textContent.substring(0, result.textContent.length - 1); // delete one number from the text,
+      numbers.pop(); // and cut it from the 'numbers' array too.
+    } else if (timesOp >= 1 && timesOp == timesDelOp) { // Else if there are operators in the text,
+      result.textContent = result.textContent.substring(0, result.textContent.length - 1); // just delete a number from the text content (the number isn't stored anywhere).
+    } else if (timesOp >= 1 && timesOp !== timesDelOp) { // Lastly, if there are operators but they are not equal to the deleted operators,
+      result.textContent = result.textContent.substring(0, result.textContent.length - 1); // delete a number from the text.
       var lastNumber = finalNmbrs[finalNmbrs.length-1].toString().substring(0, finalNmbrs[finalNmbrs.length-1].toString().length-1);
       finalNmbrs.pop();
       finalNmbrs.push([lastNumber]);
+      if (String(finalNmbrs[finalNmbrs.length-1]) == '') { // If 'finalNmbrs' array's last item is '',
+        finalNmbrs.pop(); // then delete the item.
+      }
     }
   }
   else {
     result.textContent = result.textContent.substring(0, result.textContent.length - 3);
-    finalNmbrs.pop();
+    finalNmbrs.splice(0, finalNmbrs.length-2);
     timesOp--;
   }
   if (result.textContent == '') result.textContent = '0';
@@ -104,8 +105,33 @@ function digiting(op) {
   timesDelOp++;
 }
 
+// FULL UPDATE - This project turned out to be a lot bigger than I expected. I could make it the simple way,
+// but I didn't. There are a lot of bugs, which makes sence, considering that this is my first one. So, here
+// is a list with all the known issues to be fixed. Hopefully I will come back soon. Until then, I will start
+// simple with other cool (but smaller) projects.
+//
+//
+// LIST_OF_ERRORS:
+//
+// 1) The overflow issue. This issue happens when the digits on the text content exceed the 26-digit available
+// space. It gets complicating dealing with both digits (which I have come to a solution), and operators, that
+// add extra space before and between the operator itself. I guess I could, but not prefer, to not put space at
+// in these two spots.
+//
+// 2) The 'numbers' array issue. I can see that issue exist when adding a first number to the calculation, then
+// add the first operator, then delete the operator, then add it again. The number, in this case, is added twice
+// in the 'finalNmbrs' array, plus the operator.
+//
+// 3) The first text digit problem. A simple one, actually. The operation should start with a number, and only a 
+// number (specifically an integer number).
+//
+// 4) Backspace when timesOp are not equal with timesDelOp. I have written a pretty much unspecific piece of code
+// there. I need to find a way to delete properly and correctly (can't think how now it's late).
+//
+// 5) Comments. I should add comments to explain the hard parts of my code.
+
 function addOperator(op) {
-  while (result.textContent.length >= 26) {
+  while (result.textContent.length >= 29) {
     result.textContent = result.textContent.substring(1);
   };
   result.textContent += ' ' + String(op) + ' ';
