@@ -65,6 +65,7 @@ p, button.result {
 button.result {
     text-align: right;
     padding: 0 10px;
-    white-space: pre-wrap;
+    white-space: nowrap;
     margin-bottom: 15px;
+    overflow: hidden;
 }
